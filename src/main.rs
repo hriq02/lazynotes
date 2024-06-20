@@ -10,9 +10,10 @@ use std::process::Command;
 
 fn main() {
     let notes_path = read_config(0);
-    let editor = read_config(1);
+    let bash = read_config(1);
+    let editor = read_config(2);
 
-    let mut cmd = Command::new("powershell");
+    let mut cmd = Command::new(bash.unwrap());
     cmd.args([editor.unwrap(),notes_path.unwrap() + "\\nana"]);
 
     match cmd.output(){
