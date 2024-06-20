@@ -1,6 +1,6 @@
 //use std::io::prelude::*;
 //use std::string;
-//use std::env;
+use std::env;
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
@@ -10,10 +10,10 @@ use std::process::Command;
 
 fn main() {
     let notes_path = read_config(0);
-    let bash = read_config(1);
-    let editor = read_config(2);
+    let editor = read_config(1);
+    let bash = if env::consts::OS == "windows" {"powershell"} else if env::consts::OS == "macos" {"terminal"} else{"bash"};
 
-    let mut cmd = Command::new(bash.unwrap());
+    let mut cmd = Command::new(bash);
     cmd.args([editor.unwrap(),notes_path.unwrap() + "\\nana"]);
 
     match cmd.output(){
@@ -26,6 +26,7 @@ fn main() {
             println!("{}", o);
         }
     }
+    println!("{}",env::consts::OS);
 }
 
 
