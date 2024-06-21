@@ -20,20 +20,25 @@ fn main() {
     let mut cmd = Command::new(bash);
     let mut all_notes = read_notes_path("note_files");
 
-    println!("filePath: {}", all_notes.get("nana").unwrap() );
+    //println!("filePath: {}", all_notes.get("nana").unwrap() );
 
     //all_notes.contains_key("nana");
     
     let args: Vec<String> = env::args().collect();
 
-    if(args.len() > 0){
-        for arg in args{
-            println!("Searching for {}",&arg);
-        }
+    if(args.len() < 1){
+        // for arg in args{
+        //     println!("argument: {}",&arg);
+        // }
+        
+        return;
     }
 
-    
-    cmd.args([editor.clone(), format!("{}\\nana", notes_path)]);
+    println!("filePath: {}", all_notes.get(&args[1]).unwrap() );
+
+    cmd.args([editor.clone(), format!("{}", all_notes.get(&args[1]).unwrap() )]);
+    //cmd.args([editor.clone(), format!("{}\\", notes_path)]);
+
 
     // Execute the command oppening the editor
     match cmd.output() {
