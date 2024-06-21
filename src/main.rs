@@ -1,8 +1,8 @@
 //use std::io::prelude::*;
 //use std::string;
 use std::env;
-use std::fs;
-use std::fs::read_to_string;
+// use std::fs;
+// use std::fs::read_to_string;
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
@@ -13,12 +13,12 @@ use std::process::Command;
 use std::collections::HashMap;
 
 fn main() {
-    let notes_path = read_config(0);
+    // let notes_path = read_config(0);
     let editor = read_config(1);
     let bash = if env::consts::OS == "windows" { "powershell" } else if env::consts::OS == "macos" { "terminal" } else { "bash" };
 
     let mut cmd = Command::new(bash);
-    let mut all_notes = read_notes_path("note_files");
+    let all_notes = read_notes_path("note_files");
 
     //println!("filePath: {}", all_notes.get("nana").unwrap() );
 
@@ -26,7 +26,7 @@ fn main() {
     
     let args: Vec<String> = env::args().collect();
 
-    if(args.len() < 1){
+    if args.len() < 1 {
         // for arg in args{
         //     println!("argument: {}",&arg);
         // }

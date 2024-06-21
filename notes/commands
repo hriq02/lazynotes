@@ -2,3 +2,4 @@
 -e or --editor opens with specificeditor
 -de or --default_editor sets the default editor
 -dp or --default_path sets the default path
+-gp or --get_path gets the path from the filew
