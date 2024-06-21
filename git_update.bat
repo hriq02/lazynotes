@@ -1,9 +1,10 @@
 @echo off
 setlocal
 cd /d %~dp0
-set /p commit_message="Enter your commit message: "
+REM set /p commit_message="Enter your commit message: "
+REM"%commit_message%"
 git add .
-git commit -m "%commit_message%"
+git commit -m %1
 git push origin HEAD
 
 endlocal
