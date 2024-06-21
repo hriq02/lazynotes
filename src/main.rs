@@ -2,12 +2,15 @@
 //use std::string;
 use std::env;
 use std::fs;
+use std::fs::read_to_string;
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
+use std::io::ErrorKind;
 //use std::path::Path;
 //use std::io::Error;
 use std::process::Command;
+use std::collections::HashMap;
 
 fn main() {
     let notes_path = read_config(0);
@@ -15,16 +18,22 @@ fn main() {
     let bash = if env::consts::OS == "windows" { "powershell" } else if env::consts::OS == "macos" { "terminal" } else { "bash" };
 
     let mut cmd = Command::new(bash);
-    cmd.args([editor.clone(), format!("{}\\nana", notes_path)]);
+    let mut all_notes = read_notes_path("note_files");
 
-    //will iterate over the files in the directory and map them
-    if let Ok(paths) = fs::read_dir(&notes_path) {
-        for path in paths {
-            if let Ok(entry) = path {
-                println!("Name: {:?}", entry.file_name());
-            }
+    println!("filePath: {}", all_notes.get("nana").unwrap() );
+
+    //all_notes.contains_key("nana");
+    
+    let args: Vec<String> = env::args().collect();
+
+    if(args.len() > 0){
+        for arg in args{
+            println!("Searching for {}",&arg);
         }
     }
+
+    
+    cmd.args([editor.clone(), format!("{}\\nana", notes_path)]);
 
     // Execute the command oppening the editor
     match cmd.output() {
@@ -39,6 +48,39 @@ fn main() {
     }
 }
 
+fn read_notes_path(path : &str) -> HashMap<String, String>{
+    let mut all_notes = HashMap::new();
+
+    let file = match File::open(path) {
+        Ok(file) => file,
+        Err(e) => {
+            if e.kind() == ErrorKind::NotFound {
+                panic!("File not found: {}", path);
+            } else {
+                panic!("Error opening file: {}", e);
+            }
+        }
+    };
+    let lines = BufReader::new(&file).lines();
+    
+    for line in lines {
+        match line {
+            Ok(ln) => {
+                if ln.trim().is_empty() {continue;}
+                let file_path = ln.trim();
+                if let Some(file_name) = file_path.rsplit_once(|c| c == '/' || c == '\\') {
+                    all_notes.insert(get_file_name(&file_name.1.to_string()), ln.to_string());
+                }
+            }
+            Err(_) => {}
+        }
+    }
+    return all_notes;
+}
+
+fn get_file_name(path: &String) -> String {
+    return path[0..path.find(".").unwrap_or(path.len())].to_string()
+}
 
 fn read_config(line: usize) -> String {
     let file = File::open("config").expect("failed to open config file");
