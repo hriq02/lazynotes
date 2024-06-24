@@ -1,0 +1,1 @@
+fl = fl[0..fl.find(".").unwrap_or(fl.len())].to_string(); <- vai tirar tudo depois do ponto
