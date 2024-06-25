@@ -1,5 +1,7 @@
--f or --add_file adds a file to list
 -e or --editor opens with specificeditor
+-a or --add to add path to te list 
 -de or --default_editor sets the default editor
 -dp or --default_path sets the default path
--gp or --get_path gets the path from the filew
+-gp or --get_path gets the path from the file
+-p or --print prints out the entire file content
+

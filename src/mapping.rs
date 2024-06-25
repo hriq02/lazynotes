@@ -38,20 +38,6 @@ pub fn insert_new_note( all_notes : &mut HashMap<String, String>, path : &String
     if file_path.is_empty() {return;}
     
     if let Some(file_name) = file_path.rsplit_once(|c| c == '/' || c == '\\') {
-        // let mut fl : String = file_name.1.to_string();
-
-        // // if unique {
-        // //     fl = fl[0..fl.find(".").unwrap_or(fl.len())].to_string();
-        // // }
-
-        // if all_notes.contains_key(&fl){
-        //     println!("warning: {} already exists ", fl);
-        //     // if unique { println!("warning: {} already exists as unique file", fl) }
-        //     // else { println!("warning: {} already exists", fl) };
-        //     return;
-        // }
-        print!("{} ", file_name.1);
-
         all_notes.insert(file_name.1.to_string(), path.to_string());
     }
 }
