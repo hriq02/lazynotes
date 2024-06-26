@@ -4,7 +4,7 @@ use std::{collections::HashMap, fs::File, io::Read};
 
 pub fn add_file(paths_map : &HashMap<String, String> ,new_file_path : &str){
     if !paths_map.contains_key(new_file_path){
-        if new_file_path.contains('/'){
+        if new_file_path.contains('/') || new_file_path.contains('\\') {
             crate::file_utils::insert_to_file( "config",&new_file_path );
         }else{
             print!("file is not a path, be sure that is a path: {}", new_file_path);

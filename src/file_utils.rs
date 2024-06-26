@@ -4,6 +4,7 @@ use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Read;
 use std::io::Write;
+use std::path;
 use std::path::Path;
 
 
@@ -47,19 +48,31 @@ pub fn write_in_line(file_path : &str, line_content : String, line : usize){
 }
 
 pub fn check_files_exist(){
-    if !Path::new("paths").exists(){
-        File::create("paths").expect("was not able to create note_files file");
-    }
-
-    if !Path::new("notes").exists(){
-        fs::create_dir_all("notes").expect("was not able to create notes folder");
-    }
-
-    let note_path = std::env::current_dir().unwrap().to_str().unwrap().to_string() + "\\notes";
+    // println!("File not found: {:?}", std::env::current_exe() .unwrap().to_str().unwrap().to_string());
     
-    if !Path::new("config").exists(){
-        let mut new_conifg_file = File::create("config").expect("was not able to create config file");
-        let text : String = note_path + "\nnotepad";
+    // let curr_path : String = std::env::current_exe() .unwrap().to_str().unwrap().to_string();
+
+    // match curr_path.strip_suffix("lzn.exe") {
+    //     Some(curr_path) => curr_path,
+    //     None => curr_path
+    // }
+    // println!("Current path: {:?}", curr_path.clone().strip_prefix("lzn.exe"));
+
+    let paths_file = curr_path.clone() + "\\paths";
+
+    if !Path::new(&paths_file).exists(){
+        File::create(paths_file).expect("was not able to create note_files file");
+    }
+
+    let notes_file = curr_path.clone() + "\\notes";
+    if !Path::new(&notes_file).exists(){
+        fs::create_dir_all(notes_file.clone()).expect("was not able to create notes folder");
+    }
+
+    let config_file = curr_path.clone() + "\\config";
+    if !Path::new(&config_file).exists(){
+        let mut new_conifg_file = File::create(config_file).expect("was not able to create config file");
+        let text : String = notes_file.clone() + "\nnotepad";
         new_conifg_file.write_all(&text.as_bytes()).expect("failed to write in the file");
     }
 

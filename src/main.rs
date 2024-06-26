@@ -79,9 +79,9 @@ fn main() {
     if !Path::new(&path_).exists(){
         println!("does not contain key in list, do you want to create a file with that name in default folder?");
         if !commands::user_said_yes() {return;}
-        
+
         commands::create_file_in_default_path(path_.clone());
-        path_ = file_utils::read_line(0, "config") + "/" + &path_;
+        path_ = file_utils::read_line(0, "config") + "\\" + &path_;
         file_utils::insert_to_file("paths", &path_);
     }
 
