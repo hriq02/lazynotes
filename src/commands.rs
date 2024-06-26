@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, fs::File, io::Read, path};
 
 
 
@@ -17,11 +17,32 @@ pub fn add_file(paths_map : &HashMap<String, String> ,new_file_path : &str){
 }
 
 pub fn help(){
-    println!("those following commands are availiable:");
+    println!("the following commands are availiable:");
     println!("-e   or --editor          opens with specific editor");
     println!("-a   or --add             to add path to te list ");
     println!("-p   or --print           prints out the entire file content");
     println!("-gp  or --get_path        gets the path from the file");
     println!("-de  or --default_editor  sets the default editor");
     println!("-dp  or --default_path    sets the default path");
+}
+
+pub fn user_said_yes() -> bool{
+    loop {
+        let mut input = [0];
+        let _ = std::io::stdin().read(&mut input);
+
+        match input[0] as char {
+            'y' | 'Y' => return true,
+            'n' | 'N' => return false,
+            _ => println!("y/n only please."),
+        }
+    }
+
+}
+
+
+pub fn create_file_in_default_path(file : String){
+    let default_path = crate::file_utils::read_line(0, "config") + "\\" + file.as_str();
+    File::create(&default_path).expect("failed to create file");
+    crate::file_utils::insert_to_file( "paths",&default_path );
 }
