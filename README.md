@@ -1,6 +1,6 @@
 # lazynotes
 
-Just a lazy way to open your files XD
+Just a lazy way to open your files or projects XD
 
 
 # here are the following commands:
