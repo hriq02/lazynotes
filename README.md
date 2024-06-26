@@ -1,7 +1,7 @@
 # lazynotes
 
 Just a lazy way to open your files or projects XD
-
+this projects is intended for me to just learn rust, its a fun languange not gonna lie
 
 # here are the following commands:
 | short command |     |   long command   |         description           |
