@@ -1,8 +1,9 @@
-<h1>lazynotes</h1>
-<div>Just a lazy way to open your files XD</div>
+# lazynotes
+
+Just a lazy way to open your files XD
 
 
-<h3>here are the following commands:</h3>
+# here are the following commands:
 | short command |     |   long command   |         description           |
 |     ---       | --- |      ---         |           ---                 |
 |     -e        | or  | --editor         |  opens with specific editor   |
