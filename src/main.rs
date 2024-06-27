@@ -21,7 +21,6 @@ fn main() {
     let mut editor = file_utils::read_line(DEFAULT_EDITOR,(current_path.clone() + "config").as_str() );
     let bash = if env::consts::OS == "windows" { "powershell" } else if env::consts::OS == "macos" { "terminal" } else { "bash" };
 
-    let mut cmd = Command::new(bash);
     let paths_map = mapping::read_notes_file((current_path.clone() + "paths").as_str());
     let mut path_ = String::new();
 
@@ -96,12 +95,14 @@ fn main() {
         path_ = config::read_config(DEFAULT_PATH) + "\\" + &path_;
         config::add_entry(&path_);
     }
-
-
-    println!("filePath: {}", path_ );
-    cmd.args([editor.clone(), format!("{}", path_ )]);
-
+    let mut cmd = Command::new(bash);
     
+    cmd .args([editor.clone(), format!("{}", path_ )])
+        .spawn()
+        .expect("failed to execute command")
+        .wait()
+        .expect("failed to wait for command");
+
     match cmd.output() {
         Ok(o) => {
             unsafe {
@@ -112,5 +113,6 @@ fn main() {
             println!("Error executing command: {}", e);
         }
     }
+    
 }
 
