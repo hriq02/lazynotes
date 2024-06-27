@@ -1,20 +1,4 @@
-use std::{collections::HashMap, fs::File, io::Read};
-
-
-
-pub fn add_file(paths_map : &HashMap<String, String> ,new_file_path : &str){
-    if !paths_map.contains_key(new_file_path){
-        if new_file_path.contains('/') || new_file_path.contains('\\') {
-            crate::file_utils::insert_to_file( "config",&new_file_path );
-        }else{
-            print!("file is not a path, be sure that is a path: {}", new_file_path);
-            return;
-        }
-    }else{
-        println!("file already exist in the list: {}", paths_map.get(new_file_path).unwrap().to_string() );
-        return;
-    }
-}
+use std::{collections::HashMap, io::Read};
 
 pub fn help(){
     println!("the following commands are availiable:");
@@ -25,6 +9,7 @@ pub fn help(){
     println!("-de  or --default_editor  sets the default editor");
     println!("-dp  or --default_path    sets the default path");
 }
+
 
 pub fn user_said_yes() -> bool{
     loop {
@@ -41,8 +26,12 @@ pub fn user_said_yes() -> bool{
 }
 
 
-pub fn create_file_in_default_path(file : String){
-    let default_path = crate::file_utils::read_line(0, "config") + "\\" + file.as_str();
-    File::create(&default_path).expect("failed to create file");
-    crate::file_utils::insert_to_file( "paths",&default_path );
+pub fn get_path(key : &str, paths_map : &HashMap<String, String>){
+    if paths_map.contains_key(key){
+        println!("{}", paths_map.get( key ).unwrap().to_string() );
+    }else{
+        println!("{} does not contain in the list, please add it", key);
+        println!();
+        help();
+    }
 }

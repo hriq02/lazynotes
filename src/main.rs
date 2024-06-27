@@ -5,17 +5,24 @@ use std::process::Command;
 mod file_utils;
 mod mapping;
 mod commands;
+mod config;
+
+static DEFAULT_PATH : usize = 0;
+static DEFAULT_EDITOR : usize = 1;
+
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     
     file_utils::check_files_exist();
+
+    let current_path : String = file_utils::current_exe_path();
     
-    let mut editor = file_utils::read_line(1,"config");
+    let mut editor = file_utils::read_line(DEFAULT_EDITOR,(current_path.clone() + "config").as_str() );
     let bash = if env::consts::OS == "windows" { "powershell" } else if env::consts::OS == "macos" { "terminal" } else { "bash" };
 
     let mut cmd = Command::new(bash);
-    let paths_map = mapping::read_notes_file("paths");
+    let paths_map = mapping::read_notes_file((current_path.clone() + "paths").as_str());
     let mut path_ = String::new();
 
     //------------------------------------------------------------------------------------------------------------------------------
@@ -37,22 +44,25 @@ fn main() {
             }
             "-p" | "--print" =>{
                 is_to_print = true;
-                arg_n += 1;
             }
             "-a" | "--add" => {
-                commands::add_file(&paths_map,&args[arg_n + 1]);
-                return;
+                config::add_entry(&args[arg_n + 1]);
+
+                println!("file add to the list, open it?");
+                if !commands::user_said_yes() {return;}
+
+                path_ = args[arg_n + 1].clone();
             }
             "-gp" | "--get_path" => {
-                println!("{}", paths_map.get( &args[arg_n + 1].clone() ).unwrap().to_string() );
+                commands::get_path(&args[arg_n + 1], &paths_map);
                 return;
             }
             "-de" | "--default_editor" => {
-                file_utils::write_in_line("config",args[arg_n + 1].clone(), 1);
+                config::change_config(&args[arg_n + 1],DEFAULT_EDITOR);
                 return;
             }
             "-dp" | "--default_path" => {
-                file_utils::write_in_line("config",args[arg_n + 1].clone(), 0);
+                config::change_config(&args[arg_n + 1],DEFAULT_PATH);
                 return;
             }
             "-h" | "--help" => {
@@ -72,22 +82,26 @@ fn main() {
     //------------------------------------------------------------------------------------------------------------------------------
 
     if is_to_print {
-        println!("{}", file_utils::get_file_content(paths_map.get( &path_ ).unwrap().to_string().as_str()));
+        println!("{}",path_.clone());
+        println!("{}", file_utils::get_file_content(&path_));
         return;
     }
 
+
     if !Path::new(&path_).exists(){
-        println!("does not contain key in list, do you want to create a file with that name in default folder?");
+        println!("this file does not contain in the list, do you want to create this file with that name in default folder?");
         if !commands::user_said_yes() {return;}
 
-        commands::create_file_in_default_path(path_.clone());
-        path_ = file_utils::read_line(0, "config") + "\\" + &path_;
-        file_utils::insert_to_file("paths", &path_);
+        config::create_file_in_default_path(path_.clone());
+        path_ = config::read_config(DEFAULT_PATH) + "\\" + &path_;
+        config::add_entry(&path_);
     }
+
 
     println!("filePath: {}", path_ );
     cmd.args([editor.clone(), format!("{}", path_ )]);
 
+    
     match cmd.output() {
         Ok(o) => {
             unsafe {

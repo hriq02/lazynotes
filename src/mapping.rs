@@ -4,8 +4,6 @@ use std::io::BufRead;
 use std::io::BufReader;
 use std::io::ErrorKind;
 
-
-
 pub fn read_notes_file(path : &str) -> HashMap<String, String>{
     let mut all_notes = HashMap::new();
 
