@@ -103,16 +103,16 @@ fn main() {
         .wait()
         .expect("failed to wait for command");
 
-    match cmd.output() {
-        Ok(o) => {
-            unsafe {
-                println!("{}", String::from_utf8_unchecked(o.stdout));
-            }
-        }
-        Err(e) => {
-            println!("Error executing command: {}", e);
-        }
-    }
+    // match cmd.output() {
+    //     Ok(o) => {
+    //         unsafe {
+    //             println!("{}", String::from_utf8_unchecked(o.stdout));
+    //         }
+    //     }
+    //     Err(e) => {
+    //         println!("Error executing command: {}", e);
+    //     }
+    // }
     
 }
 
