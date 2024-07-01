@@ -14,7 +14,7 @@ but you can open with a specific editor with -e {editor} <br />
 
 # side note
 this project is not to take seriously, is just for fun and for me to learn new stuf <br />
-
+it only works on windows for now, working on linux version <br />
 
 # here are the following commands:
 | short command |     |   long command   |         description           |
