@@ -12,7 +12,7 @@ you can print the content using the sign -p <br />
 you can set the default editor that will open in any file by typing -de {name of the editor}<br />
 but you can open with a specific editor with -e {editor} <br />
 
-#side note
+# side note
 this project is not to take seriously, is just for fun and for me to learn new stuf <br />
 
 
