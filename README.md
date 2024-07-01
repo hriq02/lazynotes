@@ -1,7 +1,20 @@
 # lazynotes
 
-Just a lazy way to open your files or projects XD  <br />
-this projects is intended for me to just learn rust, its a fun languange not gonna lie <br />
+just a simple tool to organize for your files, can be used to open projects more eazly <br />
+this is a simple project, you can modfy as you want or use it as a base for something else <br />
+
+# how to use it?
+you add the path of the exe folder to your path variable, and just type lzn {name of the file with extension, you dont need it}<br />
+at the start if you type the name and its not listed it will ask if you want to create it in the default folder witch at first will be in the exe folder called "notes"<br />
+but you can change the default folder by typing -dp {path}<br />
+also if you just want the path of the folder you can just type -gp <br />
+you can print the content using the sign -p <br />
+you can set the default editor that will open in any file by typing -de {name of the editor}<br />
+but you can open with a specific editor with -e {editor} <br />
+
+#side note
+this project is not to take seriously, is just for fun and for me to learn new stuf <br />
+
 
 # here are the following commands:
 | short command |     |   long command   |         description           |
