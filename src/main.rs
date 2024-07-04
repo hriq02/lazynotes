@@ -19,7 +19,16 @@ fn main() {
     let current_path : String = file_utils::current_exe_path();
     
     let mut editor = file_utils::read_line(DEFAULT_EDITOR,(current_path.clone() + "config").as_str() );
-    let bash = if env::consts::OS == "windows" { "powershell" } else if env::consts::OS == "macos" { "terminal" } else { "bash" };
+    
+    // std::process::Command::new("nvim")
+    // .arg("/home/hriq/repos/lazynotes/src/mapping.rs")
+    // .spawn()
+    // .expect("Error: Failed to run editor")
+    // .wait()
+    // .expect("Error: Editor returned a non-zero status");
+
+    // return;
+
 
     let paths_map = mapping::read_notes_file((current_path.clone() + "paths").as_str());
     let mut path_ = String::new();
@@ -87,6 +96,7 @@ fn main() {
         arg_n += 1;
     }
     //------------------------------------------------------------------------------------------------------------------------------
+    let bash = if env::consts::OS == "windows" { "powershell" } else { &editor };
 
     if is_to_go{
         commands::go_to(&path_, bash);
@@ -108,13 +118,40 @@ fn main() {
         path_ = config::read_config(DEFAULT_PATH) + "\\" + &path_;
         config::add_entry(&path_);
     }
-    let mut cmd = Command::new(bash);
+
+    match env::consts::OS {
+        "windows" =>{
+            Command::new(bash)
+                    .args([editor.clone(), format!("{}", path_ )])
+                    .spawn()
+                    .expect("Error: Failed to run editor")
+                    .wait()
+                    .expect("Error: Editor returned a non-zero status");
+        }
+        _ => {
+            Command::new(editor.clone())
+                    .arg(path_)
+                    .spawn()
+                    .expect("Error: Failed to run editor")
+                    .wait()
+                    .expect("Error: Editor returned a non-zero status");
+
+        }
+    }
+    // Command::new("nvim")
+    // .arg("/home/hriq/repos/lazynotes/src/mapping.rs")
+    // .spawn()
+    // .expect("Error: Failed to run editor")
+    // .wait()
+    // .expect("Error: Editor returned a non-zero status");
+
+    // let mut cmd = Command::new(bash);
     
-    cmd .args([editor.clone(), format!("{}", path_ )])
-        .spawn()
-        .expect("failed to execute command")
-        .wait()
-        .expect("failed to wait for command");
+    // cmd .args([editor.clone(), format!("{}", path_ )])
+    //     .spawn()
+    //     .expect("failed to execute command")
+    //     .wait()
+    //     .expect("failed to wait for command");
     
 }
 
