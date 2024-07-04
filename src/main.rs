@@ -34,6 +34,7 @@ fn main() {
     }
     let mut arg_n = 1;
     let mut is_to_print : bool = false;
+    let mut is_to_go : bool = false;
     
     while arg_n < args.len() {
         match args[arg_n].as_str() {
@@ -68,6 +69,13 @@ fn main() {
                 commands::help();
                 return;
             }
+            "-l" | "--list" => {
+                commands::list();
+                return;
+            }
+            "-go" | "--go_to" =>{
+                is_to_go = true;
+            }
             _ => {
                 if paths_map.contains_key(&args[arg_n]) {
                     path_ = paths_map.get( &args[arg_n].clone() ).unwrap().to_string();
@@ -79,6 +87,11 @@ fn main() {
         arg_n += 1;
     }
     //------------------------------------------------------------------------------------------------------------------------------
+
+    if is_to_go{
+        commands::go_to(&path_, bash);
+        return;
+    }
 
     if is_to_print {
         println!("{}",path_.clone());

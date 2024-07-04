@@ -1,4 +1,4 @@
-use std::{collections::HashMap, io::Read};
+use std::{collections::HashMap, io::Read, process::Command};
 
 pub fn help(){
     println!("the following commands are availiable:");
@@ -24,7 +24,17 @@ pub fn user_said_yes() -> bool{
     }
 
 }
+pub fn go_to(path : &str, bash : &str){
+    Command::new(bash)
+                            .args(["cd", path])
+                            .spawn()
+                            .expect("failed to go to path");
+}
 
+pub fn list(){
+    let path_file = crate::file_utils::current_exe_path() + "paths";
+    println!("{}", crate::file_utils::get_file_content(&path_file));
+}
 
 pub fn get_path(key : &str, paths_map : &HashMap<String, String>){
     if paths_map.contains_key(key){

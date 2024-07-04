@@ -39,19 +39,6 @@ pub fn get_file_content(file_path : &str) -> String{
 }
 
 
-// pub fn write_in_line(file_path : &str, line_content : String, line : usize){
-//     let mut file = OpenOptions::new().write(true).read(true).open(file_path).unwrap();
-//     let mut contents = String::new();
-
-//     file.read_to_string(&mut contents).expect("failed to read file");
-
-//     let mut lines : Vec<String> = contents.lines().map(|line| line.to_string()).collect();
-//     lines[line] = line_content;
-
-//     file.write_all(lines.join("\n").as_bytes()).expect("failed to write in the file");
-// }
-
-
 pub fn check_files_exist(){
     let curr_path : String = current_exe_path();
 
