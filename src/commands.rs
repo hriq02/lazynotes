@@ -4,6 +4,7 @@ pub fn help(){
     println!("the following commands are availiable:");
     println!("-e   or --editor          opens with specific editor");
     println!("-a   or --add             to add path to te list ");
+    println!("-l   or --list            open a list with all the paths");
     println!("-p   or --print           prints out the entire file content");
     println!("-gp  or --get_path        gets the path from the file");
     println!("-de  or --default_editor  sets the default editor");
