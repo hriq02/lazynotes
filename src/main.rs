@@ -138,20 +138,5 @@ fn main() {
 
         }
     }
-    // Command::new("nvim")
-    // .arg("/home/hriq/repos/lazynotes/src/mapping.rs")
-    // .spawn()
-    // .expect("Error: Failed to run editor")
-    // .wait()
-    // .expect("Error: Editor returned a non-zero status");
-
-    // let mut cmd = Command::new(bash);
-    
-    // cmd .args([editor.clone(), format!("{}", path_ )])
-    //     .spawn()
-    //     .expect("failed to execute command")
-    //     .wait()
-    //     .expect("failed to wait for command");
-    
 }
 
