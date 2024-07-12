@@ -6,6 +6,7 @@ mod file_utils;
 mod mapping;
 mod commands;
 mod config;
+mod color_utils;
 
 static DEFAULT_PATH : usize = 0;
 static DEFAULT_EDITOR : usize = 1;
@@ -15,8 +16,10 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     
     file_utils::check_files_exist();
+    
 
     let current_path : String = file_utils::current_exe_path();
+
     
     let mut editor = file_utils::read_line(DEFAULT_EDITOR,(current_path.clone() + "config").as_str() );
     
@@ -104,8 +107,9 @@ fn main() {
     }
 
     if is_to_print {
-        println!("{}",path_.clone());
-        println!("{}", file_utils::get_file_content(&path_));
+        // println!("{}",path_.clone());
+        // println!("{}", file_utils::get_file_content(&path_));
+        commands::print_file(&path_);
         return;
     }
 

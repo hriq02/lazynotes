@@ -30,12 +30,10 @@ pub fn read_notes_file(path : &str) -> HashMap<String, String>{
     return all_notes;
 }
 
-
+/// insere uma nova chave
+/// 
 pub fn insert_new_note( all_notes : &mut HashMap<String, String>, path : &String ) {
     let file_path = path.trim();
     if file_path.is_empty() {return;}
-    
-    if let Some(file_name) = file_path.rsplit_once(|c| c == '/' || c == '\\') {
-        all_notes.insert(file_name.1.to_string(), path.to_string());
-    }
+    all_notes.insert(crate::file_utils::get_file_name(file_path), path.to_string());
 }

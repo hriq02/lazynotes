@@ -71,3 +71,12 @@ pub fn current_exe_path() -> String{
 
     curr_path
 }
+
+
+pub fn get_file_name(file_path : &str) -> String{
+    if let Some(file_name) = file_path.rsplit_once(|c| c == '/' || c == '\\'){
+        return file_name.1.to_string();
+    }else{
+        return "".to_string();
+    }
+}
