@@ -49,21 +49,18 @@ pub fn get_path(key : &str, paths_map : &HashMap<String, String>){
 
 /// it is inspired on bat from sharkdp, chekout here -> https://github.com/sharkdp/bat
 pub fn print_file(file_path : &str){
-    
     let mut line_position : usize = 0;
     let file_name : String = crate::file_utils::get_file_name(file_path);
-    
-    let mult_char =|x : usize , c : &str | -> String {(0..x).map(|_| c).collect::<String>()};
-    
-    println!("{}",mult_char(8,"─"));
 
     println!("{:─<8}┬{:─<95}", "","");
     println!(  "{:8}│ File : {file_name}","");
     println!("{:─<8}┼{:─<95}", "","");
+    
     for line in read_to_string(file_path).unwrap().lines(){
         line_position += 1;
         println!("{line_position:7} │ {line}");
     }
+    
     println!("{:─<8}┴{:─<95}", "","");
 }
 
