@@ -13,8 +13,8 @@ you can set the default editor that will open in any file by typing -de {name of
 but you can open with a specific editor with -e {editor} <br />
 
 # side note
-this project is not to take seriously, is just for fun and for me to learn new stuf <br />
-it only works on windows for now, working on linux version <br />
+this project is not to take seriously, is just for fun and for me to learn new rust and new stuff <br />
+is still on development, so any suggestion will be welcome<br />
 
 # here are the following commands:
 | short command |     |   long command   |         description           |
