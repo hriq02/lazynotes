@@ -11,7 +11,7 @@ also if you just want the path of the folder you can just type -gp <br />
 you can print the content using the sign -p <br />
 you can set the default editor that will open in any file by typing -de {name of the editor}<br />
 but you can open with a specific editor with -e {editor} <br />
-
+the default path is where you notes go if you dont add them to the list <br />
 # side note
 this project is not to take seriously, is just for fun and for me to learn new rust and new stuff <br />
 is still on development, so any suggestion will be welcome<br />
